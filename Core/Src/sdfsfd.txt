@@ -1,0 +1,365 @@
+#include "nrf24l01.h"
+#include "spi.h"
+#include "usart.h"
+
+const uint8_t TX_ADDRESS_X[TX_ADR_WIDTH] = {0x34, 0x43, 0x10, 0x10, 0x01}; // send model address
+const uint8_t RX_ADDRESS_X[RX_ADR_WIDTH] = {0x34, 0x43, 0x10, 0x10, 0x01}; // receive model address
+
+
+//
+void NRF24L01_SPI_Init(void)
+{
+    __HAL_SPI_DISABLE(&hspi3);               //ÏÈ¹Ø±ÕSPI2
+    hspi3.Init.CLKPolarity=SPI_POLARITY_LOW; //´®ÐÐÍ¬²½Ê±ÖÓµÄ¿ÕÏÐ×´Ì¬ÎªµÍµçÆ½
+    hspi3.Init.CLKPhase=SPI_PHASE_1EDGE;     //´®ÐÐÍ¬²½Ê±ÖÓµÄµÚ1¸öÌø±äÑØ£¨ÉÏÉý»òÏÂ½µ£©Êý¾Ý±»²ÉÑù
+    HAL_SPI_Init(&hspi3);
+    __HAL_SPI_ENABLE(&hspi3);                //Ê¹ÄÜSPI2
+}
+
+void SPI3_init(void)
+{
+	//CE
+	GPIO_InitStruct.Pin = GPIO_PIN_2;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    //CS
+	GPIO_InitStruct.Pin = GPIO_PIN_4;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  
+    //SCK
+	GPIO_InitStruct.Pin = GPIO_PIN_5;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    //MOSI
+	GPIO_InitStruct.Pin = GPIO_PIN_7;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+    //MISO
+	GPIO_InitStruct.Pin = GPIO_PIN_6;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+
+	//IRQ
+	GPIO_InitStruct.Pin = GPIO_PIN_3;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+}
+
+/**
+ * @brief This function handles Memory management fault.
+ */
+void NRF24L01_GPIO_Init(void)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+
+
+#if 0
+	GPIO_InitStruct.Pin = NRF_CS;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	GPIO_InitStruct.Pin = NRF_CE;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	/*Configure GPIO pin : PB12 */
+	GPIO_InitStruct.Pin = NRF_IRQ;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	// GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	HAL_GPIO_WritePin(GPIOB, NRF_CS, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOB, NRF_CE, GPIO_PIN_SET);
+	// HAL_GPIO_WritePin(GPIOB, NRF_IRQ, GPIO_PIN_SET);
+
+	// MX_SPI3_Init();
+	// NRF24L01_SPI_Init();
+	/* EXTI interrupt init*/
+	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 1);
+	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+#endif
+
+	// CE
+	GPIO_InitStruct.Pin = GPIO_PIN_10;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	// CS
+	GPIO_InitStruct.Pin = GPIO_PIN_13;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	// SCK
+	GPIO_InitStruct.Pin = GPIO_PIN_10;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+	// MOSI
+	GPIO_InitStruct.Pin = GPIO_PIN_5;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	// MISO
+	GPIO_InitStruct.Pin = GPIO_PIN_11;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+	// IRQ
+	GPIO_InitStruct.Pin = GPIO_PIN_12;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+	CE_H;  // ³õÊ¼»¯Ê±ÏÈÀ­¸ß
+	CSN_H; // ³õÊ¼»¯Ê±ÏÈÀ­¸ß
+
+	CE_L;  // Ê¹ÄÜNRF24L01
+	CSN_H; // SPIÆ¬Ñ¡È¡Ïû
+}
+
+void SOFT_SPI_Delay(uint8_t us)
+{
+        for(int i = 0; i < us; i++)    
+        {
+            __asm("NOP");//core bus 160M  Çé¿öÏÂ´ó¸ÅIICËÙÂÊ 400K
+        }
+    
+}
+
+
+
+uint8_t SPI_ReadWriteByte(uint8_t TxData)                                        
+{		
+	uint16_t bit_ctr;
+   	for(bit_ctr=0;bit_ctr<8;bit_ctr++) 
+   	{
+		if(TxData & 0x80)
+		MOSI_H;         
+		else
+		MOSI_L;
+		TxData = (TxData << 1);           
+		SCK_H; 
+		SOFT_SPI_Delay(10);
+		if(READ_MISO)                     
+		TxData |= 0x01;       		  
+		SCK_L; 
+		SOFT_SPI_Delay(10);          		 
+   	}
+    return(TxData);           		  		    
+}
+
+
+/**
+ * @brief send a byte to the device
+ */
+uint8_t NRF24L01_Write_Reg(uint8_t res, uint8_t value)
+{
+
+	uint8_t status;
+
+	NRF_CS_LOW;
+	status = SPI3_ReadWriteByte(res,1);
+	SPI3_ReadWriteByte(value,1);
+	NRF_CS_HIGH;
+
+	return status;
+}
+
+//@brief read a byte from the device
+uint8_t NRF24L01_Read_Reg(uint8_t res)
+{
+	uint8_t reg_val;
+
+	NRF_CS_LOW;
+	SPI3_ReadWriteByte(res,1);
+	reg_val = SPI3_ReadWriteByte(0xFF,1);
+	NRF_CS_HIGH;
+
+	return reg_val;
+}
+
+// Read a certain length of data at a specified position
+uint8_t NRF24L01_Read_Buf(uint8_t res, uint8_t *pBuf,uint8_t len)
+{
+	uint8_t status,i;
+
+	NRF_CS_LOW;
+	status = SPI3_ReadWriteByte(res,1);
+
+	SPI3_ReadWriteByte(0XFF,len);
+
+	NRF_CS_HIGH;
+
+	return status;
+}
+
+// Write a certain length of data at a specified position
+uint8_t NRF24L01_Write_Buf(uint8_t res, uint8_t *pBuf,uint8_t len)
+{
+	uint8_t status, i;
+
+	NRF_CS_LOW;
+	status = SPI3_ReadWriteByte(res,1);
+
+	status = SPI3_ReadWriteByte(*pBuf,len);
+
+	NRF_CS_HIGH;
+
+	return status;
+}
+
+void NRF24L01_Power_Down_Mode(void)
+{
+	NRF_CS_LOW;
+	NRF24L01_Write_Reg(CONFIG, 0x00);
+	NRF_CS_HIGH;
+}
+
+// checks whether the device is exists
+uint8_t NRF24L01_Check(void)
+{
+	uint8_t buf[5] = {0xa5, 0xa5, 0xa5, 0xa5, 0xa5};
+	uint8_t i;
+
+	NRF24L01_Write_Buf(NRF_WRITE_REG + TX_ADDR, buf, 5); // write 5 bytes address register
+	NRF24L01_Read_Buf(TX_ADDR, buf,5 );
+	for (i = 0; i < 5; i++)
+	{
+		if (buf[i] != 0xa5)
+			break;
+	}
+	if (i != 5)
+		return 1;
+	return 0;
+}
+
+// Send model configuration
+void NRF24L01_TX_Mode(void)
+{
+	NRF_CE_LOW;
+	// NRF24L01_Write_Buf(W_REGISTER + TX_ADDR, (uint8_t *)TX_ADDRESS_X,TX_ADR_WIDTH );	// write Tx Address
+	// NRF24L01_Write_Buf(W_REGISTER + RX_ADDR_P0, (uint8_t *)RX_ADDRESS_X,RX_ADR_WIDTH ); // Write Rx address to enable ACK mode
+	// NRF24L01_Write_Reg(W_REGISTER + EN_AA, 0x01);										// enable 0 channel auto ACK mode
+	// NRF24L01_Write_Reg(W_REGISTER + EN_RXADDR, 0x01);									// enable 0 channel Receiver address
+	// NRF24L01_Write_Reg(W_REGISTER + SETUP_PETR, 0x1a);									// Set the automatic sending interval: 500us+86us, Maximum number of repetitions is 10
+	// NRF24L01_Write_Reg(W_REGISTER + RF_CH, 40);											// Set the channel to 40
+	// NRF24L01_Write_Reg(W_REGISTER + RF_SETUP, 0x0f);									// Set transmit parameters: 0db gain 2Mnps low noise gain on
+	// NRF24L01_Write_Reg(W_REGISTER + NRF24L01_CONFIG, 0x0e);
+	NRF24L01_Write_Buf(NRF_WRITE_REG+TX_ADDR,(uint8_t*)TX_ADDRESS_X,TX_ADR_WIDTH);//Ð´TX½ÚµãµØÖ· 
+  	NRF24L01_Write_Buf(NRF_WRITE_REG+RX_ADDR_P0,(uint8_t*)RX_ADDRESS_X,RX_ADR_WIDTH); //ÉèÖÃTX½ÚµãµØÖ·,Ö÷ÒªÎªÁËÊ¹ÄÜACK	  
+
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+EN_AA,0x01);     //Ê¹ÄÜÍ¨µÀ0µÄ×Ô¶¯Ó¦´ð    
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+EN_RXADDR,0x01); //Ê¹ÄÜÍ¨µÀ0µÄ½ÓÊÕµØÖ·  
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+SETUP_RETR,0x1a);//ÉèÖÃ×Ô¶¯ÖØ·¢¼ä¸ôÊ±¼ä:500us + 86us;×î´ó×Ô¶¯ÖØ·¢´ÎÊý:10´Î
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+RF_CH,40);       //ÉèÖÃRFÍ¨µÀÎª40
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+RF_SETUP,0x0f);  //ÉèÖÃTX·¢Éä²ÎÊý,0dbÔöÒæ,2Mbps,µÍÔëÉùÔöÒæ¿ªÆô   
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+CONFIG,0x0e);   
+	NRF_CE_HIGH; // NRF_CE is high, start sending data after 10us
+	HAL_Delay(1);
+}
+
+// Receive model configuration
+void NRF24L01_RX_Mode(void)
+{
+	NRF_CE_LOW;
+  	NRF24L01_Write_Buf(NRF_WRITE_REG+RX_ADDR_P0,(uint8_t*)RX_ADDRESS_X,RX_ADR_WIDTH);//Ð´RX½ÚµãµØÖ·
+	  
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+EN_AA,0x01);       //Ê¹ÄÜÍ¨µÀ0µÄ×Ô¶¯Ó¦´ð    
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+EN_RXADDR,0x01);   //Ê¹ÄÜÍ¨µÀ0µÄ½ÓÊÕµØÖ·  	 
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+RF_CH,40);	        //ÉèÖÃRFÍ¨ÐÅÆµÂÊ		  
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+RX_PW_P0,RX_PLOAD_WIDTH);//Ñ¡ÔñÍ¨µÀ0µÄÓÐÐ§Êý¾Ý¿í¶È 	    
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+RF_SETUP,0x0f);    //ÉèÖÃTX·¢Éä²ÎÊý,0dbÔöÒæ,2Mbps,µÍÔëÉùÔöÒæ¿ªÆô   
+  	NRF24L01_Write_Reg(NRF_WRITE_REG+CONFIG, 0x0f);     //ÅäÖÃ»ù±¾¹¤×÷Ä£Ê½µÄ²ÎÊý;PWR_UP,EN_CRC,16BIT_CRC,½ÓÊÕÄ£Ê½ 
+	NRF_CE_HIGH;
+}
+
+// Send a packet to the device
+uint8_t NRF24L01_TX_Packet(uint8_t *txbuf)
+{
+	uint8_t ret;
+
+	NRF_CE_LOW;
+	printf("2 %d\r\n",NRF_IRQ_STATUS);
+	NRF24L01_Write_Buf(WR_TX_PLOAD, txbuf,TX_PLOAD_WIDTH ); // write data to tx buffer,32 bytes
+	printf("3 %d\r\n",NRF_IRQ_STATUS);
+
+	NRF_CE_HIGH;											 // start transaction
+	while (NRF_IRQ_STATUS!=0);					     		    // wait for transaction finished
+
+	printf("4\r\n");
+	ret = NRF24L01_Read_Reg(STATUS);			   // read  register
+	NRF24L01_Write_Reg(NRF_WRITE_REG + STATUS, ret); // clear TX_DS or MAX_RT interrupt status
+	if (ret & MAX_TX)									   // Maximum sending times exceeded
+	{
+		NRF24L01_Write_Reg(FLUSH_TX, 0XFF); // clear TX FIFO register
+		return MAX_TX;
+	}
+	if (ret & TX_OK) // transmit success
+	{
+		return TX_OK;
+	}
+	return 0xFF; // transmit fail
+}
+
+// Receive one package from the server
+uint8_t NRF24L01_RX_Packet(uint8_t *rxbuf)
+{
+	uint8_t ret;
+
+	NRF_CE_HIGH;
+	while (NRF_IRQ_STATUS)
+		;
+	NRF_CE_LOW;
+
+	ret = NRF24L01_Read_Reg(STATUS);			   // read status register
+	NRF24L01_Write_Reg(NRF_WRITE_REG + STATUS, ret); // clear TX_DS or MAX_RT interrupt flags
+	if (ret & RX_OK)									   // receive data from server
+	{
+		NRF24L01_Read_Buf(RD_RX_PLOAD, rxbuf, RX_PLOAD_WIDTH); // read data
+		NRF24L01_Write_Reg(FLUSH_RX, 0xFF);						// clean Rx FIFO buffer
+		return 0;
+	}
+	return 1; // not data received
+}
+
+// Initial
+void NRF24L01_Init(void)
+{
+	NRF24L01_GPIO_Init();
+
+	NRF_CS_HIGH;
+	NRF_CE_LOW;
+}
