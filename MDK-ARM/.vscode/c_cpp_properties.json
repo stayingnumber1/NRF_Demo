@@ -3,16 +3,16 @@
         {
             "name": "STM32G431Test_LED",
             "includePath": [
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\Core\\Inc",
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\Drivers\\STM32G4xx_HAL_Driver\\Inc",
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\Drivers\\STM32G4xx_HAL_Driver\\Inc\\Legacy",
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\Drivers\\CMSIS\\Device\\ST\\STM32G4xx\\Include",
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\Drivers\\CMSIS\\Include",
+                "v:\\github\\NRF_Demo\\Core\\Inc",
+                "v:\\github\\NRF_Demo\\Drivers\\STM32G4xx_HAL_Driver\\Inc",
+                "v:\\github\\NRF_Demo\\Drivers\\STM32G4xx_HAL_Driver\\Inc\\Legacy",
+                "v:\\github\\NRF_Demo\\Drivers\\CMSIS\\Device\\ST\\STM32G4xx\\Include",
+                "v:\\github\\NRF_Demo\\Drivers\\CMSIS\\Include",
                 "D:\\Keil_v5\\ARM\\ARMCC\\include",
                 "D:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\MDK-ARM",
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\Core\\Src",
-                "d:\\STM32CubeIDEWorkSpace\\sd\\STM32G431Test_LED\\Drivers\\STM32G4xx_HAL_Driver\\Src"
+                "v:\\github\\NRF_Demo\\MDK-ARM",
+                "v:\\github\\NRF_Demo\\Core\\Src",
+                "v:\\github\\NRF_Demo\\Drivers\\STM32G4xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",

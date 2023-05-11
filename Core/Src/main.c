@@ -127,11 +127,12 @@ int main(void)
     printf("nrf24l01 01 failed!\r\n");
   }
 
-	TX_Mode();
+  // for TX Mode
+	// TX_Mode();
+
   //for receive client
-  // RX_Mode();
+  RX_Mode();
   printf("hello world! \r\n");
-  // printf("waiting for data... \r\n");
 	
 	
   /* USER CODE END 2 */
@@ -142,45 +143,41 @@ int main(void)
   {
     HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_6);
     HAL_Delay(500);
-
     
     //for receive client
-    // if(NRF24L01_RxPacket(rxbuf)==0)
-    // {
-    //   nrf24_frame_index++;
-    //   printf("receive %d ok\r\n", nrf24_frame_index);
-
-    //   for (int i = 0; i < 5; i++)
-    //   {
-    //     printf("[%d]:[%u]\r\n",i, rxbuf[i]);
-    //   }
-    //   memset(rxbuf, '0', 5);
-      
-    // }
-
-
-		// NRF24L01_RX_Mode();
-    // printf("0 \r\n");
-    //for send client
-    if (NRF24L01_TxPacket(txbuf) == TX_OK)
+    if(NRF24L01_RxPacket(rxbuf)==0)
     {
-      nrf24_frame_send_index++;
-      printf("nrf1 receive is sucessed!\r\n");
-      for (uint8_t i = 0; i < 5; i++)
+      nrf24_frame_index++;
+      printf("receive %d ok\r\n", nrf24_frame_index);
+
+      for (int i = 0; i < 5; i++)
       {
-        printf("nrf1 receive data is %d \r\n", txbuf[i]);
+        printf("[%d]:[%u]\r\n",i, rxbuf[i]);
       }
-      txbuf[1] = nrf24_frame_send_index;
-      txbuf[0]=txbuf[1]-1;
-      txbuf[2]='a';
-      txbuf[3]='b';
-      txbuf[4]='c';
-      if (nrf24_frame_send_index > 254)
-      {
-        nrf24_frame_send_index = 0;
-      }
+      memset(rxbuf, '0', 5);
+      
     }
-    // printf("1 \r\n");
+
+
+    //for send client
+    // if (NRF24L01_TxPacket(txbuf) == TX_OK)
+    // {
+    //   nrf24_frame_send_index++;
+    //   printf("nrf1 receive is sucessed!\r\n");
+    //   for (uint8_t i = 0; i < 5; i++)
+    //   {
+    //     printf("nrf1 receive data is %d \r\n", txbuf[i]);
+    //   }
+    //   txbuf[1] = nrf24_frame_send_index;
+    //   txbuf[0]=txbuf[1]-1;
+    //   txbuf[2]='a';
+    //   txbuf[3]='b';
+    //   txbuf[4]='c';
+    //   if (nrf24_frame_send_index > 254)
+    //   {
+    //     nrf24_frame_send_index = 0;
+    //   }
+    // }
 
 
     /* USER CODE END WHILE */
@@ -191,50 +188,7 @@ int main(void)
 }
 
 
-
-
-
-void SystemClock_Config(void)
-{
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-
-  /** Configure the main internal regulator output voltage 
-  */
-  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
-  /** Initializes the CPU, AHB and APB busses clocks 
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
-  RCC_OscInitStruct.PLL.PLLN = 85;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
-  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** Initializes the CPU, AHB and APB busses clocks 
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-}
-
-
-#if 0
+#if 1
 /**
   * @brief System Clock Configuration
   * @retval None

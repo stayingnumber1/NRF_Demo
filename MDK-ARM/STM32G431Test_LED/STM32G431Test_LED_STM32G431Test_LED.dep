@@ -1,8 +1,8 @@
 Dependencies for Project 'STM32G431Test_LED', Target 'STM32G431Test_LED': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\ARMCC
 F (startup_stm32g431xx.s)(0x645B6871)(--cpu Cortex-M4.fp.sp -g --apcs=interwork -I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include--pd "__UVISION_VERSION SETA 533" --pd "_RTE_ SETA 1" --pd "STM32G431xx SETA 1" --pd "_RTE_ SETA 1"--list startup_stm32g431xx.lst --xref -o stm32g431test_led\startup_stm32g431xx.o --depend stm32g431test_led\startup_stm32g431xx.d)
-F (..\Core\Src\nrf24L01.c)(0x645C5922)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="533" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o stm32g431test_led\nrf24l01.o --omf_browse stm32g431test_led\nrf24l01.crf --depend stm32g431test_led\nrf24l01.d)
-I (../Core/Inc/nrf24l01.h)(0x645BC5B6)
+F (..\Core\Src\nrf24L01.c)(0x645C67B1)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="533" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o stm32g431test_led\nrf24l01.o --omf_browse stm32g431test_led\nrf24l01.crf --depend stm32g431test_led\nrf24l01.d)
+I (../Core/Inc/nrf24l01.h)(0x645C68C1)
 I (../Core/Inc/main.h)(0x64452BD3)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h)(0x641EA7DA)
 I (../Core/Inc/stm32g4xx_hal_conf.h)(0x645B10AE)
@@ -37,7 +37,7 @@ I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h)(0x641EA7DA)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h)(0x641EA7DA)
 I (../Core/Inc/spi.h)(0x645B9672)
 I (../Core/Inc/usart.h)(0x645B10AD)
-F (../Core/Src/main.c)(0x645C5EFC)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="533" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o stm32g431test_led\main.o --omf_browse stm32g431test_led\main.crf --depend stm32g431test_led\main.d)
+F (../Core/Src/main.c)(0x645C6925)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="533" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o stm32g431test_led\main.o --omf_browse stm32g431test_led\main.crf --depend stm32g431test_led\main.d)
 I (../Core/Inc/main.h)(0x64452BD3)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h)(0x641EA7DA)
 I (../Core/Inc/stm32g4xx_hal_conf.h)(0x645B10AE)
@@ -74,7 +74,7 @@ I (../Core/Inc/spi.h)(0x645B9672)
 I (../Core/Inc/usart.h)(0x645B10AD)
 I (../Core/Inc/gpio.h)(0x64452BD2)
 I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
-I (../Core/Inc/nrf24l01.h)(0x645BC5B6)
+I (../Core/Inc/nrf24l01.h)(0x645C68C1)
 F (../Core/Src/gpio.c)(0x645B6A8D)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="533" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o stm32g431test_led\gpio.o --omf_browse stm32g431test_led\gpio.crf --depend stm32g431test_led\gpio.d)
 I (../Core/Inc/gpio.h)(0x64452BD2)
 I (../Core/Inc/main.h)(0x64452BD3)
@@ -109,7 +109,7 @@ I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi.h)(0x641EA7DA)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_spi_ex.h)(0x641EA7DA)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h)(0x641EA7DA)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h)(0x641EA7DA)
-F (../Core/Src/spi.c)(0x645B9F0A)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="533" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o stm32g431test_led\spi.o --omf_browse stm32g431test_led\spi.crf --depend stm32g431test_led\spi.d)
+F (../Core/Src/spi.c)(0x645C6328)(--c99 -c --cpu Cortex-M4.fp.sp -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc -I ../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I ../Drivers/CMSIS/Include-I.\RTE\_STM32G431Test_LED-ID:\Users\arm_v\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\Users\arm_v\AppData\Local\Arm\Packs\Keil\STM32G4xx_DFP\1.4.0\Drivers\CMSIS\Device\ST\STM32G4xx\Include-D__UVISION_VERSION="533" -D_RTE_ -DSTM32G431xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32G431xx-o stm32g431test_led\spi.o --omf_browse stm32g431test_led\spi.crf --depend stm32g431test_led\spi.d)
 I (../Core/Inc/spi.h)(0x645B9672)
 I (../Core/Inc/main.h)(0x64452BD3)
 I (../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h)(0x641EA7DA)
